@@ -1,8 +1,10 @@
 ﻿using pryXMLChanger.Properties;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Common;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -10,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace pryXMLChanger
 {
@@ -42,14 +45,14 @@ namespace pryXMLChanger
 
                     docXML.Load(strDirectorioOriginal);
 
-                    XmlNodeList varListaNodosNominal = docXML.DocumentElement.SelectNodes("//nominal");
+                    XmlNodeList varListaNodos = docXML.DocumentElement.SelectNodes("//nominal");
 
                     //Extracción del porcentaje ingresado y conversión para multiplicacíón
                     double varPorcentaje = Convert.ToDouble(txtPorcentaje.Text);
                     varPorcentaje = varPorcentaje / 100 + 1;
 
                     //Para cada nodo de la lista de nodos del types.xml aumenta el nominal de cada tipo de loot por el porcentaje ingresado
-                    foreach (XmlNode varNodoNominal in varListaNodosNominal)
+                    foreach (XmlNode varNodoNominal in varListaNodos)
                     {
                         double dobNominal = Convert.ToDouble(varNodoNominal.InnerText); //Variable double que almacena el nominal que posteriormente va a ser aumentado
                         dobNominal = dobNominal * varPorcentaje; //Aumento del nominal por el porcentaje ingresado
@@ -60,10 +63,10 @@ namespace pryXMLChanger
                     }
 
                     //Selección de nodos del nodo minimum
-                    XmlNodeList varListaNodosMin = docXML.DocumentElement.SelectNodes("//min");
+                    varListaNodos = docXML.DocumentElement.SelectNodes("//min");
 
                     //Para cada nodo de la lista de nodos del types.xml aumenta el min de cada tipo de loot por el porcentaje ingresado
-                    foreach (XmlNode varNodoMin in varListaNodosMin)
+                    foreach (XmlNode varNodoMin in varListaNodos)
                     {
                         double dobMin = Convert.ToDouble(varNodoMin.InnerText); //Variable double que almacena el min que posteriormente va a ser aumentado
                         dobMin = dobMin * varPorcentaje; //Aumento del min por el porcentaje ingresado
@@ -73,21 +76,15 @@ namespace pryXMLChanger
                         docXML.Save(strDirectorioModificado + "\\types_modified_%" + txtPorcentaje.Text + ".xml"); //Guarda el min uno a la vez (¡REVISAR ESTO A LO MEJOR SE PUEDE HACER QUE SE GUARDE TODO JUNTO PORQUE EL PROGRAMA SE PAPEA AL GUARDAR TODO INDIVIDUAL!)
                     }
 
-                    string strDirectorioZombis = strDirectorioModificado + "\\types_modified_%" + txtPorcentaje.Text + ".xml";
-
-                    XmlDocument docXMLZombis = new XmlDocument();
-
-                    docXMLZombis.Load(strDirectorioZombis);
-
-                    XmlNodeList varListaNodosZombis = docXMLZombis.DocumentElement.SelectNodes("type[starts-with(@name,'ZmbF') or starts-with(@name,'ZmbM')]//min");
+                    varListaNodos = docXML.DocumentElement.SelectNodes("type[starts-with(@name,'ZmbF') or starts-with(@name,'ZmbM')]//min");
 
                     //Resetea el min de los zombis a 1
-                    foreach (XmlNode varNodoMinZombis in varListaNodosZombis)
+                    foreach (XmlNode varNodoMinZombis in varListaNodos)
                     {
                         MessageBox.Show(varNodoMinZombis.InnerText);
                         string num = "1";
                         varNodoMinZombis.InnerText = num;
-                        docXMLZombis.Save(strDirectorioModificado + "\\types_modified_%" + txtPorcentaje.Text + ".xml"); //Guarda el min uno a la vez (¡REVISAR ESTO A LO MEJOR SE PUEDE HACER QUE SE GUARDE TODO JUNTO PORQUE EL PROGRAMA SE PAPEA AL GUARDAR TODO INDIVIDUAL!)
+                        docXML.Save(strDirectorioModificado + "\\types_modified_%" + txtPorcentaje.Text + ".xml"); //Guarda el min uno a la vez (¡REVISAR ESTO A LO MEJOR SE PUEDE HACER QUE SE GUARDE TODO JUNTO PORQUE EL PROGRAMA SE PAPEA AL GUARDAR TODO INDIVIDUAL!)
                     }
 
                     MessageBox.Show("XML replace process DONE!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information); //Mensaje que notifica que el for finalizó
@@ -146,6 +143,7 @@ namespace pryXMLChanger
                 txtDirectorioModificado.Enabled = true;
                 btnDirectorioModificado.Enabled = true;
                 lblDirectorioModificado.Enabled = true;
+                btnShow.Enabled = true;
                 if (txtDirectorioModificado.Text != "")
                 {
                     lblPorcentaje.Enabled = true;
@@ -164,6 +162,7 @@ namespace pryXMLChanger
                 lblPorcentaje.Enabled = false;
                 txtPorcentaje.Enabled = false;
                 btnAplicar.Enabled = false;
+                btnShow.Enabled = false;
             }
         }
 
@@ -200,7 +199,7 @@ namespace pryXMLChanger
 
         private void btnDescargarOriginal_Click(object sender, EventArgs e)
         {
-            using (FolderBrowserDialog FolderBrowserDialog = new FolderBrowserDialog() {Description = "Select the destination folder for the file"})
+            using (FolderBrowserDialog FolderBrowserDialog = new FolderBrowserDialog() { Description = "Select the destination folder for the file" })
             {
                 if (FolderBrowserDialog.ShowDialog() == DialogResult.OK)
                 {
@@ -209,7 +208,7 @@ namespace pryXMLChanger
                     MessageBox.Show("File copied to: " + strDirectorioTypesOriginal, "Copied", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-            }
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -234,5 +233,84 @@ namespace pryXMLChanger
 
             }
         }
+
+        private void btnShow_Click(object sender, EventArgs e)
+        {
+            int row_counter = 0;
+            int contador = 0;
+            string strDirectorioOriginal = txtDirectorioOriginal.Text;
+            strDirectorioOriginal = strDirectorioOriginal.Replace(@"\", @"\\");
+
+            XmlDocument docXML = new XmlDocument();
+
+            docXML.Load(strDirectorioOriginal);
+
+            XmlNodeList varListaNodos = docXML.DocumentElement.SelectNodes("//nominal");
+
+            foreach (XmlNode varNodoNominal in varListaNodos)
+            {
+                //array[contador] = varNodoNominal.InnerText;
+                contador++;
+            }
+            string[,] array;
+            array = new string[contador,3];
+            MessageBox.Show(Convert.ToString(contador));
+
+            foreach (XmlNode varNodoNominal in varListaNodos)
+            {
+                array[row_counter, 1] = varNodoNominal.InnerText;
+                row_counter++;
+            }
+
+            row_counter = 0;
+
+            varListaNodos = docXML.DocumentElement.SelectNodes("//min");
+
+            foreach (XmlNode varNodoMin in varListaNodos)
+            {
+                array[row_counter, 2] = varNodoMin.InnerText;
+                row_counter++;
+            }
+
+            row_counter = 0;
+
+            varListaNodos = docXML.DocumentElement.SelectNodes("type/@name");
+
+            foreach (XmlNode varNodoMin in varListaNodos)
+            {
+                array[row_counter, 0] = varNodoMin.InnerText;
+                row_counter++;
+            }
+
+
+
+            for (int i = 0; i < array.GetLength(0); i++)// array rows
+            {
+                string[] row = new string[array.GetLength(1)];
+
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    row[j] = array[i, j];
+                }
+
+                dgvItems.Rows.Add(row);
+
+            }
+            }
+
+            private void button1_Click_1(object sender, EventArgs e)
+        {
+            string[] array;
+            array = new string[3];
+            array[0] = "10";
+            array[1] = "30";
+            array[2] = "60";
+
+            DataGridViewRow row = (DataGridViewRow)dgvItems.Rows[0].Clone();
+            row.Cells[0].Value = array[0];
+            row.Cells[1].Value = array[1];
+            row.Cells[2].Value = array[2];
+            dgvItems.Rows.Add(row);
+        }
     }
-    }
+}

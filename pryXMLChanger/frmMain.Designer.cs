@@ -40,12 +40,22 @@
             this.btnDirectorioModificado = new System.Windows.Forms.Button();
             this.lblEstado = new System.Windows.Forms.Label();
             this.btnDescargarOriginal = new System.Windows.Forms.Button();
+            this.dgvItems = new System.Windows.Forms.DataGridView();
+            this.Item = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Nominal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Min = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnShow = new System.Windows.Forms.Button();
+            this.mrcTypesBoost = new System.Windows.Forms.GroupBox();
+            this.mrcBuscador = new System.Windows.Forms.GroupBox();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).BeginInit();
+            this.mrcTypesBoost.SuspendLayout();
+            this.mrcBuscador.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnAplicar
             // 
             this.btnAplicar.Enabled = false;
-            this.btnAplicar.Location = new System.Drawing.Point(294, 201);
+            this.btnAplicar.Location = new System.Drawing.Point(286, 169);
             this.btnAplicar.Name = "btnAplicar";
             this.btnAplicar.Size = new System.Drawing.Size(75, 22);
             this.btnAplicar.TabIndex = 0;
@@ -57,7 +67,7 @@
             // 
             this.lblPorcentaje.AutoSize = true;
             this.lblPorcentaje.Enabled = false;
-            this.lblPorcentaje.Location = new System.Drawing.Point(12, 122);
+            this.lblPorcentaje.Location = new System.Drawing.Point(6, 121);
             this.lblPorcentaje.Name = "lblPorcentaje";
             this.lblPorcentaje.Size = new System.Drawing.Size(106, 13);
             this.lblPorcentaje.TabIndex = 1;
@@ -66,7 +76,7 @@
             // txtPorcentaje
             // 
             this.txtPorcentaje.Enabled = false;
-            this.txtPorcentaje.Location = new System.Drawing.Point(12, 138);
+            this.txtPorcentaje.Location = new System.Drawing.Point(6, 137);
             this.txtPorcentaje.Name = "txtPorcentaje";
             this.txtPorcentaje.Size = new System.Drawing.Size(106, 20);
             this.txtPorcentaje.TabIndex = 2;
@@ -75,7 +85,7 @@
             // 
             // btnDirectorioOriginal
             // 
-            this.btnDirectorioOriginal.Location = new System.Drawing.Point(294, 37);
+            this.btnDirectorioOriginal.Location = new System.Drawing.Point(286, 35);
             this.btnDirectorioOriginal.Name = "btnDirectorioOriginal";
             this.btnDirectorioOriginal.Size = new System.Drawing.Size(75, 23);
             this.btnDirectorioOriginal.TabIndex = 3;
@@ -85,16 +95,16 @@
             // 
             // txtDirectorioOriginal
             // 
-            this.txtDirectorioOriginal.Location = new System.Drawing.Point(12, 39);
+            this.txtDirectorioOriginal.Location = new System.Drawing.Point(6, 38);
             this.txtDirectorioOriginal.Name = "txtDirectorioOriginal";
-            this.txtDirectorioOriginal.Size = new System.Drawing.Size(276, 20);
+            this.txtDirectorioOriginal.Size = new System.Drawing.Size(255, 20);
             this.txtDirectorioOriginal.TabIndex = 4;
             this.txtDirectorioOriginal.TextChanged += new System.EventHandler(this.txtDirectorioOriginal_TextChanged);
             // 
             // lblDirectorioOriginal
             // 
             this.lblDirectorioOriginal.AutoSize = true;
-            this.lblDirectorioOriginal.Location = new System.Drawing.Point(12, 23);
+            this.lblDirectorioOriginal.Location = new System.Drawing.Point(6, 22);
             this.lblDirectorioOriginal.Name = "lblDirectorioOriginal";
             this.lblDirectorioOriginal.Size = new System.Drawing.Size(138, 13);
             this.lblDirectorioOriginal.TabIndex = 5;
@@ -104,7 +114,7 @@
             // 
             this.lblDirectorioModificado.AutoSize = true;
             this.lblDirectorioModificado.Enabled = false;
-            this.lblDirectorioModificado.Location = new System.Drawing.Point(12, 72);
+            this.lblDirectorioModificado.Location = new System.Drawing.Point(6, 71);
             this.lblDirectorioModificado.Name = "lblDirectorioModificado";
             this.lblDirectorioModificado.Size = new System.Drawing.Size(210, 13);
             this.lblDirectorioModificado.TabIndex = 8;
@@ -113,16 +123,16 @@
             // txtDirectorioModificado
             // 
             this.txtDirectorioModificado.Enabled = false;
-            this.txtDirectorioModificado.Location = new System.Drawing.Point(12, 88);
+            this.txtDirectorioModificado.Location = new System.Drawing.Point(6, 87);
             this.txtDirectorioModificado.Name = "txtDirectorioModificado";
-            this.txtDirectorioModificado.Size = new System.Drawing.Size(276, 20);
+            this.txtDirectorioModificado.Size = new System.Drawing.Size(255, 20);
             this.txtDirectorioModificado.TabIndex = 7;
             this.txtDirectorioModificado.TextChanged += new System.EventHandler(this.txtDirectorioModificado_TextChanged);
             // 
             // btnDirectorioModificado
             // 
             this.btnDirectorioModificado.Enabled = false;
-            this.btnDirectorioModificado.Location = new System.Drawing.Point(294, 86);
+            this.btnDirectorioModificado.Location = new System.Drawing.Point(286, 85);
             this.btnDirectorioModificado.Name = "btnDirectorioModificado";
             this.btnDirectorioModificado.Size = new System.Drawing.Size(75, 23);
             this.btnDirectorioModificado.TabIndex = 6;
@@ -140,7 +150,7 @@
             // 
             // btnDescargarOriginal
             // 
-            this.btnDescargarOriginal.Location = new System.Drawing.Point(274, 9);
+            this.btnDescargarOriginal.Location = new System.Drawing.Point(6, 169);
             this.btnDescargarOriginal.Name = "btnDescargarOriginal";
             this.btnDescargarOriginal.Size = new System.Drawing.Size(113, 22);
             this.btnDescargarOriginal.TabIndex = 11;
@@ -148,27 +158,101 @@
             this.btnDescargarOriginal.UseVisualStyleBackColor = true;
             this.btnDescargarOriginal.Click += new System.EventHandler(this.btnDescargarOriginal_Click);
             // 
+            // dgvItems
+            // 
+            this.dgvItems.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvItems.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Item,
+            this.Nominal,
+            this.Min});
+            this.dgvItems.Location = new System.Drawing.Point(6, 19);
+            this.dgvItems.Name = "dgvItems";
+            this.dgvItems.ReadOnly = true;
+            this.dgvItems.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.dgvItems.RowHeadersVisible = false;
+            this.dgvItems.Size = new System.Drawing.Size(467, 356);
+            this.dgvItems.TabIndex = 12;
+            // 
+            // Item
+            // 
+            this.Item.HeaderText = "Item";
+            this.Item.Name = "Item";
+            this.Item.ReadOnly = true;
+            this.Item.Width = 52;
+            // 
+            // Nominal
+            // 
+            this.Nominal.HeaderText = "Nominal";
+            this.Nominal.Name = "Nominal";
+            this.Nominal.ReadOnly = true;
+            this.Nominal.Width = 70;
+            // 
+            // Min
+            // 
+            this.Min.HeaderText = "Min";
+            this.Min.Name = "Min";
+            this.Min.ReadOnly = true;
+            this.Min.Width = 49;
+            // 
+            // btnShow
+            // 
+            this.btnShow.Enabled = false;
+            this.btnShow.Location = new System.Drawing.Point(398, 381);
+            this.btnShow.Name = "btnShow";
+            this.btnShow.Size = new System.Drawing.Size(75, 22);
+            this.btnShow.TabIndex = 13;
+            this.btnShow.Text = "Show";
+            this.btnShow.UseVisualStyleBackColor = true;
+            this.btnShow.Click += new System.EventHandler(this.btnShow_Click);
+            // 
+            // mrcTypesBoost
+            // 
+            this.mrcTypesBoost.Controls.Add(this.btnDescargarOriginal);
+            this.mrcTypesBoost.Controls.Add(this.lblDirectorioModificado);
+            this.mrcTypesBoost.Controls.Add(this.btnAplicar);
+            this.mrcTypesBoost.Controls.Add(this.txtDirectorioModificado);
+            this.mrcTypesBoost.Controls.Add(this.txtDirectorioOriginal);
+            this.mrcTypesBoost.Controls.Add(this.btnDirectorioModificado);
+            this.mrcTypesBoost.Controls.Add(this.lblPorcentaje);
+            this.mrcTypesBoost.Controls.Add(this.lblDirectorioOriginal);
+            this.mrcTypesBoost.Controls.Add(this.txtPorcentaje);
+            this.mrcTypesBoost.Controls.Add(this.btnDirectorioOriginal);
+            this.mrcTypesBoost.Location = new System.Drawing.Point(12, 12);
+            this.mrcTypesBoost.Name = "mrcTypesBoost";
+            this.mrcTypesBoost.Size = new System.Drawing.Size(367, 207);
+            this.mrcTypesBoost.TabIndex = 14;
+            this.mrcTypesBoost.TabStop = false;
+            this.mrcTypesBoost.Text = "Loot Boost";
+            // 
+            // mrcBuscador
+            // 
+            this.mrcBuscador.Controls.Add(this.dgvItems);
+            this.mrcBuscador.Controls.Add(this.btnShow);
+            this.mrcBuscador.Location = new System.Drawing.Point(385, 12);
+            this.mrcBuscador.Name = "mrcBuscador";
+            this.mrcBuscador.Size = new System.Drawing.Size(479, 409);
+            this.mrcBuscador.TabIndex = 15;
+            this.mrcBuscador.TabStop = false;
+            this.mrcBuscador.Text = "Items List";
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(396, 228);
-            this.Controls.Add(this.btnDescargarOriginal);
+            this.ClientSize = new System.Drawing.Size(872, 435);
             this.Controls.Add(this.lblEstado);
-            this.Controls.Add(this.lblDirectorioModificado);
-            this.Controls.Add(this.txtDirectorioModificado);
-            this.Controls.Add(this.btnDirectorioModificado);
-            this.Controls.Add(this.lblDirectorioOriginal);
-            this.Controls.Add(this.txtDirectorioOriginal);
-            this.Controls.Add(this.btnDirectorioOriginal);
-            this.Controls.Add(this.txtPorcentaje);
-            this.Controls.Add(this.lblPorcentaje);
-            this.Controls.Add(this.btnAplicar);
+            this.Controls.Add(this.mrcBuscador);
+            this.Controls.Add(this.mrcTypesBoost);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DayZ Loot Boost";
+            ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).EndInit();
+            this.mrcTypesBoost.ResumeLayout(false);
+            this.mrcTypesBoost.PerformLayout();
+            this.mrcBuscador.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -187,6 +271,13 @@
         private System.Windows.Forms.Button btnDirectorioModificado;
         private System.Windows.Forms.Label lblEstado;
         private System.Windows.Forms.Button btnDescargarOriginal;
+        private System.Windows.Forms.DataGridView dgvItems;
+        private System.Windows.Forms.Button btnShow;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Item;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Nominal;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Min;
+        private System.Windows.Forms.GroupBox mrcTypesBoost;
+        private System.Windows.Forms.GroupBox mrcBuscador;
     }
 }
 
