@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Data.Common;
+using System.Data.SqlTypes;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -81,11 +82,13 @@ namespace pryXMLChanger
                     //Resetea el min de los zombis a 1
                     foreach (XmlNode varNodoMinZombis in varListaNodos)
                     {
-                        MessageBox.Show(varNodoMinZombis.InnerText);
                         string num = "1";
                         varNodoMinZombis.InnerText = num;
                         docXML.Save(strDirectorioModificado + "\\types_modified_%" + txtPorcentaje.Text + ".xml"); //Guarda el min uno a la vez (¡REVISAR ESTO A LO MEJOR SE PUEDE HACER QUE SE GUARDE TODO JUNTO PORQUE EL PROGRAMA SE PAPEA AL GUARDAR TODO INDIVIDUAL!)
                     }
+
+                    docXML.OuterXml.Replace(" />", "/>");
+                    docXML.Save(strDirectorioModificado + "\\types_modified_%" + txtPorcentaje.Text + ".xml"); //Guarda el min uno a la vez (¡REVISAR ESTO A LO MEJOR SE PUEDE HACER QUE SE GUARDE TODO JUNTO PORQUE EL PROGRAMA SE PAPEA AL GUARDAR TODO INDIVIDUAL!)
 
                     MessageBox.Show("XML replace process DONE!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information); //Mensaje que notifica que el for finalizó
 
@@ -256,6 +259,9 @@ namespace pryXMLChanger
             array = new string[contador,3];
             MessageBox.Show(Convert.ToString(contador));
 
+            string[] list;
+            list = new string[contador];
+
             foreach (XmlNode varNodoNominal in varListaNodos)
             {
                 array[row_counter, 1] = varNodoNominal.InnerText;
@@ -279,10 +285,11 @@ namespace pryXMLChanger
             foreach (XmlNode varNodoMin in varListaNodos)
             {
                 array[row_counter, 0] = varNodoMin.InnerText;
+                list[row_counter] = varNodoMin.InnerText;
                 row_counter++;
             }
 
-
+            File.WriteAllLines("D:\\types.txt", list);
 
             for (int i = 0; i < array.GetLength(0); i++)// array rows
             {
@@ -312,5 +319,55 @@ namespace pryXMLChanger
             row.Cells[2].Value = array[2];
             dgvItems.Rows.Add(row);
         }
-    }
+
+        private void button1_Click_2(object sender, EventArgs e)
+        {
+            if (txtDirectorioOriginal.Text != "" && txtDirectorioModificado.Text != "")
+            {
+                //Extrae la dirección del directorio original y reemplaza las "\" que vienen por default por "\\" que utiliza C#
+                string strDirectorioOriginal = txtDirectorioOriginal.Text;
+                strDirectorioOriginal = strDirectorioOriginal.Replace(@"\", @"\\");
+
+                //Extrae la dirección del directorio final modificado y reemplaza las "\" que vienen por default por "\\" que utiliza C#
+                string strDirectorioModificado = txtDirectorioModificado.Text;
+                strDirectorioModificado = strDirectorioModificado.Replace(@"\", @"\\");
+
+                //Verifica que haya un porcentaje ingresado
+                MessageBox.Show("Process started it might take a while depending on your PC, press OK to continue!", "Started", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                //Carga del types.xml y creación de la lista de nodos
+                XmlDocument docXML = new XmlDocument();
+
+                docXML.Load(strDirectorioOriginal);
+
+                XmlNodeList varListaNodos = docXML.DocumentElement.SelectNodes("type[starts-with(@name,'ZmbF') or starts-with(@name,'ZmbM')]//min");
+
+
+                varListaNodos = docXML.DocumentElement.SelectNodes("type[starts-with(@name,'ZmbF') or starts-with(@name,'ZmbM')]//min");
+
+                //Resetea el min de los zombis a 1
+                foreach (XmlNode varNodoMinZombis in varListaNodos)
+                {
+                    string num = "1";
+                    varNodoMinZombis.InnerText = num;
+                    docXML.Save(strDirectorioModificado + "\\types_set_zombis_to_1_min.xml"); //Guarda el min uno a la vez (¡REVISAR ESTO A LO MEJOR SE PUEDE HACER QUE SE GUARDE TODO JUNTO PORQUE EL PROGRAMA SE PAPEA AL GUARDAR TODO INDIVIDUAL!)
+                }
+
+                varListaNodos = docXML.DocumentElement.SelectNodes("type[starts-with(@name,'ZmbF') or starts-with(@name,'ZmbM')]//lifetime");
+
+                foreach (XmlNode varNodoMinZombis in varListaNodos)
+                {
+                    MessageBox.Show(varNodoMinZombis.InnerText);
+                    string num = "1800";
+                    varNodoMinZombis.InnerText = num;
+                    docXML.Save(strDirectorioModificado + "\\types_set_zombis_to_1_min.xml"); //Guarda el min uno a la vez (¡REVISAR ESTO A LO MEJOR SE PUEDE HACER QUE SE GUARDE TODO JUNTO PORQUE EL PROGRAMA SE PAPEA AL GUARDAR TODO INDIVIDUAL!)
+                }
+
+                MessageBox.Show("XML replace process DONE!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information); //Mensaje que notifica que el for finalizó
+
+                lblEstado.Text = "Process finished go to selected final folder";
+
+            }
+        }
+}
 }

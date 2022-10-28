@@ -47,6 +47,10 @@
             this.btnShow = new System.Windows.Forms.Button();
             this.mrcTypesBoost = new System.Windows.Forms.GroupBox();
             this.mrcBuscador = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btnBuscarTypesLista = new System.Windows.Forms.Button();
+            this.btnObtenerLista = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvItems)).BeginInit();
             this.mrcTypesBoost.SuspendLayout();
             this.mrcBuscador.SuspendLayout();
@@ -236,11 +240,51 @@
             this.mrcBuscador.TabStop = false;
             this.mrcBuscador.Text = "Items List";
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(18, 265);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(255, 20);
+            this.textBox1.TabIndex = 17;
+            // 
+            // btnBuscarTypesLista
+            // 
+            this.btnBuscarTypesLista.Location = new System.Drawing.Point(298, 262);
+            this.btnBuscarTypesLista.Name = "btnBuscarTypesLista";
+            this.btnBuscarTypesLista.Size = new System.Drawing.Size(75, 23);
+            this.btnBuscarTypesLista.TabIndex = 16;
+            this.btnBuscarTypesLista.Text = "Search";
+            this.btnBuscarTypesLista.UseVisualStyleBackColor = true;
+            // 
+            // btnObtenerLista
+            // 
+            this.btnObtenerLista.Enabled = false;
+            this.btnObtenerLista.Location = new System.Drawing.Point(298, 310);
+            this.btnObtenerLista.Name = "btnObtenerLista";
+            this.btnObtenerLista.Size = new System.Drawing.Size(75, 22);
+            this.btnObtenerLista.TabIndex = 12;
+            this.btnObtenerLista.Text = "Print";
+            this.btnObtenerLista.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(111, 376);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 22);
+            this.button1.TabIndex = 18;
+            this.button1.Text = "Print";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_2);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(872, 435);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnObtenerLista);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.btnBuscarTypesLista);
             this.Controls.Add(this.lblEstado);
             this.Controls.Add(this.mrcBuscador);
             this.Controls.Add(this.mrcTypesBoost);
@@ -278,6 +322,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Min;
         private System.Windows.Forms.GroupBox mrcTypesBoost;
         private System.Windows.Forms.GroupBox mrcBuscador;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button btnBuscarTypesLista;
+        private System.Windows.Forms.Button btnObtenerLista;
+        private System.Windows.Forms.Button button1;
     }
 }
 
